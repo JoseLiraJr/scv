@@ -1,0 +1,19 @@
+inherited frmCadClientes: TfrmCadClientes
+  Caption = 'Cadastro de Clientes'
+  PixelsPerInch = 96
+  TextHeight = 13
+  inherited pnTop: TFlowPanel
+    ExplicitWidth = 488
+  end
+  inherited pnBody: TFlowPanel
+    ExplicitHeight = 229
+    inherited pgcBase: TPageControl
+      inherited tabConsulta: TTabSheet
+        ExplicitLeft = 4
+        ExplicitTop = 24
+        ExplicitWidth = 473
+        ExplicitHeight = 193
+      end
+    end
+  end
+end

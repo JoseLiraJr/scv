@@ -1,0 +1,339 @@
+inherited frmCadClientes: TfrmCadClientes
+  Caption = 'Cadastro de Clientes'
+  ClientHeight = 292
+  OnDestroy = FormDestroy
+  OnShow = FormShow
+  ExplicitHeight = 321
+  PixelsPerInch = 96
+  TextHeight = 13
+  inherited pnTop: TFlowPanel
+    inherited btnExcluir: TBitBtn
+      OnClick = btnExcluirClick
+    end
+  end
+  inherited pnBody: TFlowPanel
+    Height = 251
+    inherited pgcBase: TPageControl
+      Height = 244
+      ExplicitHeight = 244
+      inherited tabConsulta: TTabSheet
+        ExplicitLeft = 4
+        ExplicitTop = 24
+        ExplicitWidth = 473
+        ExplicitHeight = 193
+        inherited GroupBox1: TGroupBox
+          inherited btnLocalizar: TSpeedButton
+            OnClick = btnLocalizarClick
+          end
+          inherited rbDescricao: TRadioButton
+            Caption = 'Nome do Cliente'
+          end
+        end
+        inherited grdConsulta: TDBGrid
+          Height = 159
+          DataSource = dmTabelas.dsCliente
+          Columns = <
+            item
+              Expanded = False
+              FieldName = 'ID'
+              Width = 50
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'NOME'
+              Width = 270
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'CPF'
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'SEXO'
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'LOGRADOURO'
+              Width = 260
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'NUMERO'
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'BAIRRO'
+              Width = 145
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'CEP'
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'CIDADE'
+              Width = 145
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'UF'
+              Width = 19
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'TELEFONE'
+              Width = 74
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'EMAIL'
+              Width = 190
+              Visible = True
+            end>
+        end
+      end
+      inherited tabCadastro: TTabSheet
+        inherited Bevel1: TBevel
+          Height = 174
+        end
+        object Label1: TLabel [1]
+          Left = 16
+          Top = 12
+          Width = 85
+          Height = 13
+          Caption = 'Nome Funcion'#225'rio'
+          FocusControl = edtNome
+        end
+        object Label2: TLabel [2]
+          Left = 327
+          Top = 12
+          Width = 19
+          Height = 13
+          Caption = 'CPF'
+          FocusControl = edtCPF
+        end
+        object Label6: TLabel [3]
+          Left = 16
+          Top = 53
+          Width = 24
+          Height = 13
+          Caption = 'Sexo'
+          FocusControl = edtRua
+        end
+        object Label3: TLabel [4]
+          Left = 80
+          Top = 53
+          Width = 19
+          Height = 13
+          Caption = 'Rua'
+          FocusControl = edtRua
+        end
+        object Label4: TLabel [5]
+          Left = 391
+          Top = 53
+          Width = 39
+          Height = 13
+          Caption = 'N'#186' Casa'
+          FocusControl = edtNumCasa
+        end
+        object Label9: TLabel [6]
+          Left = 379
+          Top = 97
+          Width = 19
+          Height = 13
+          Caption = 'CEP'
+          FocusControl = edtCEP
+        end
+        object Label8: TLabel [7]
+          Left = 316
+          Top = 97
+          Width = 13
+          Height = 13
+          Caption = 'UF'
+          FocusControl = edtRua
+        end
+        object Label7: TLabel [8]
+          Left = 166
+          Top = 97
+          Width = 33
+          Height = 13
+          Caption = 'Cidade'
+          FocusControl = edtCidade
+        end
+        object Label5: TLabel [9]
+          Left = 16
+          Top = 97
+          Width = 28
+          Height = 13
+          Caption = 'Bairro'
+          FocusControl = edtBairro
+        end
+        object Label10: TLabel [10]
+          Left = 16
+          Top = 138
+          Width = 42
+          Height = 13
+          Caption = 'Telefone'
+          FocusControl = edtTelefone
+        end
+        object Label11: TLabel [11]
+          Left = 137
+          Top = 138
+          Width = 28
+          Height = 13
+          Caption = 'E-mail'
+          FocusControl = edtEmail
+        end
+        inherited btnConfirmar: TBitBtn
+          Top = 187
+        end
+        inherited btnCancelar: TBitBtn
+          Top = 187
+        end
+        object edtNome: TDBEdit
+          Left = 16
+          Top = 28
+          Width = 305
+          Height = 21
+          DataField = 'NOME'
+          DataSource = dmTabelas.dsCliente
+          TabOrder = 2
+        end
+        object edtCPF: TDBEdit
+          Left = 327
+          Top = 28
+          Width = 130
+          Height = 21
+          DataField = 'CPF'
+          DataSource = dmTabelas.dsCliente
+          TabOrder = 3
+        end
+        object cbSexo: TDBComboBox
+          Left = 16
+          Top = 69
+          Width = 58
+          Height = 21
+          Style = csDropDownList
+          DataField = 'SEXO'
+          DataSource = dmTabelas.dsCliente
+          Items.Strings = (
+            'M'
+            'F')
+          TabOrder = 4
+        end
+        object edtRua: TDBEdit
+          Left = 80
+          Top = 69
+          Width = 305
+          Height = 21
+          DataField = 'LOGRADOURO'
+          DataSource = dmTabelas.dsCliente
+          TabOrder = 5
+        end
+        object edtNumCasa: TDBEdit
+          Left = 391
+          Top = 69
+          Width = 66
+          Height = 21
+          DataField = 'NUMERO'
+          DataSource = dmTabelas.dsCliente
+          TabOrder = 6
+        end
+        object edtCEP: TDBEdit
+          Left = 379
+          Top = 113
+          Width = 78
+          Height = 21
+          DataField = 'CEP'
+          DataSource = dmTabelas.dsCliente
+          TabOrder = 7
+        end
+        object cbUF: TDBComboBox
+          Left = 316
+          Top = 113
+          Width = 58
+          Height = 21
+          Style = csDropDownList
+          DataField = 'UF'
+          DataSource = dmTabelas.dsCliente
+          Items.Strings = (
+            'AC'
+            'AL'
+            'AM'
+            'AP'
+            'BA'
+            'CE'
+            'DF'
+            'ES'
+            'GO'
+            'MA'
+            'MG'
+            'MS'
+            'MT'
+            'PA'
+            'PB'
+            'PE'
+            'PI'
+            'PR'
+            'RJ'
+            'RN'
+            'RO'
+            'RR'
+            'RS'
+            'SC'
+            'SE'
+            'SP'
+            'TO')
+          TabOrder = 8
+        end
+        object edtCidade: TDBEdit
+          Left = 166
+          Top = 113
+          Width = 145
+          Height = 21
+          DataField = 'CIDADE'
+          DataSource = dmTabelas.dsCliente
+          TabOrder = 9
+        end
+        object edtBairro: TDBEdit
+          Left = 16
+          Top = 113
+          Width = 145
+          Height = 21
+          DataField = 'BAIRRO'
+          DataSource = dmTabelas.dsCliente
+          TabOrder = 10
+        end
+        object edtTelefone: TDBEdit
+          Left = 16
+          Top = 154
+          Width = 116
+          Height = 21
+          DataField = 'TELEFONE'
+          DataSource = dmTabelas.dsCliente
+          TabOrder = 11
+        end
+        object edtEmail: TDBEdit
+          Left = 137
+          Top = 154
+          Width = 215
+          Height = 21
+          DataField = 'EMAIL'
+          DataSource = dmTabelas.dsCliente
+          TabOrder = 12
+        end
+      end
+    end
+  end
+end

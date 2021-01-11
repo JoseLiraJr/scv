@@ -1,0 +1,75 @@
+inherited frmCadProdutos: TfrmCadProdutos
+  Caption = 'Cadastro de Produtos'
+  OnDestroy = FormDestroy
+  OnShow = FormShow
+  PixelsPerInch = 96
+  TextHeight = 13
+  inherited pnBody: TFlowPanel
+    inherited pgcBase: TPageControl
+      ActivePage = tabConsulta
+      inherited tabConsulta: TTabSheet
+        ExplicitLeft = 4
+        ExplicitTop = 24
+        ExplicitWidth = 473
+        ExplicitHeight = 193
+        inherited GroupBox1: TGroupBox
+          inherited btnLocalizar: TSpeedButton
+            OnClick = btnLocalizarClick
+          end
+          inherited edtLocalizar: TEdit
+            OnKeyPress = EditsKeyPress
+          end
+        end
+        inherited grdConsulta: TDBGrid
+          DataSource = dmTabelas.dsProduto
+          Columns = <
+            item
+              Expanded = False
+              FieldName = 'ID'
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'COD_BARRA'
+              Width = 90
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'DESCRICAO'
+              Width = 210
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'QTD_ESTOQUE'
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'VLR_COMPRA'
+              Width = 82
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'PERC_LUCRO'
+              Width = 82
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'VLR_VENDA'
+              Width = 82
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'CONTR_ESTOQUE'
+              Visible = True
+            end>
+        end
+      end
+    end
+  end
+end

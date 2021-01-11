@@ -1,0 +1,125 @@
+unit uCadProdutos;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uBase, Data.DB, Vcl.ExtCtrls, Vcl.Grids,
+  Vcl.DBGrids, Vcl.StdCtrls, Vcl.Buttons, Vcl.ComCtrls, uDmTabelas, uProdutoController,
+  Vcl.DBCtrls, Vcl.Mask;
+
+type
+  tpPesquisa = (tpCodigo, tpDescricao);
+
+type
+  TfrmCadProdutos = class(TfrmBase)
+    Label1: TLabel;
+    edtCodBarra: TDBEdit;
+    Label2: TLabel;
+    EdtDescricao: TDBEdit;
+    Label3: TLabel;
+    edtQtdEstoque: TDBEdit;
+    Label4: TLabel;
+    edtVlrCompra: TDBEdit;
+    Label5: TLabel;
+    edtVlrVenda: TDBEdit;
+    Label6: TLabel;
+    edtPercLucro: TDBEdit;
+    cbContrEstoque: TDBCheckBox;
+    procedure FormShow(Sender: TObject);
+    procedure EditsKeyPress(Sender : TObject; var Key : Char);
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
+    procedure radiobuttonsClick(Sender: TObject);
+    procedure btnLocalizarClick(Sender: TObject);
+    procedure btnInserirClick(Sender: TObject);
+    procedure btnAlterarClick(Sender: TObject);
+    procedure btnCancelarClick(Sender: TObject);
+    procedure btnExcluirClick(Sender: TObject);
+  private
+    { Private declarations }
+    dtmTabelas : TdmTabelas;
+    tipo : tpPesquisa;
+    produtoCTO : TProdutoController;
+  public
+    { Public declarations }
+  end;
+
+var
+  frmCadProdutos: TfrmCadProdutos;
+
+implementation
+
+uses
+  uVisualControl;
+
+{$R *.dfm}
+
+procedure TfrmCadProdutos.btnAlterarClick(Sender: TObject);
+begin
+  produtoCTO.Edit(dtmTabelas.dsProduto);
+  inherited;
+end;
+
+procedure TfrmCadProdutos.btnCancelarClick(Sender: TObject);
+begin
+  produtoCTO.Cancel(dtmTabelas.dsProduto);
+  inherited;
+end;
+
+procedure TfrmCadProdutos.btnExcluirClick(Sender: TObject);
+begin
+  if (produtoCTO.Delete(dtmTabelas.dsCliente)) then
+   Application.MessageBox('Produto excluido com Sucesso!', 'Informação', MB_OK + MB_ICONINFORMATION);
+end;
+
+procedure TfrmCadProdutos.btnInserirClick(Sender: TObject);
+begin
+  produtoCTO.Insert(dtmTabelas.dsProduto);
+  inherited;
+end;
+
+procedure TfrmCadProdutos.btnLocalizarClick(Sender: TObject);
+begin
+  produtoCTO.Filter(dtmTabelas.dsProduto, Integer(tipo), edtLocalizar.Text);
+end;
+
+procedure TfrmCadProdutos.EditsKeyPress(Sender: TObject; var Key: Char);
+begin
+  if not((Sender = edtLocalizar) and (tipo = tpDescricao)) then
+    begin
+      if not(CharNumbers(Key)) then
+        Key := #0;
+    end;
+end;
+
+procedure TfrmCadProdutos.FormCreate(Sender: TObject);
+begin
+  inherited;
+  dtmTabelas := TdmTabelas.Create(Self);
+  produtoCTO := TProdutoController.Create;
+  produtoCTO.Open(dtmTabelas.dsProduto);
+end;
+
+procedure TfrmCadProdutos.FormDestroy(Sender: TObject);
+begin
+  produtoCTO.Free;
+  dtmTabelas.Free;
+end;
+
+procedure TfrmCadProdutos.FormShow(Sender: TObject);
+begin
+  tipo := tpCodigo;
+end;
+
+procedure TfrmCadProdutos.radiobuttonsClick(Sender: TObject);
+begin
+  inherited;
+  if (Sender = rbCodigo) then
+    tipo := tpCodigo
+  else
+  if (Sender = rbDescricao) then
+    tipo := tpDescricao;
+end;
+
+end.

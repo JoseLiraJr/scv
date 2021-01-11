@@ -1,0 +1,28 @@
+unit uExcluirProduto;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.Buttons;
+
+type
+  TfrmExcluirProduto = class(TForm)
+    edtSeqProd: TEdit;
+    btnInformacao: TBitBtn;
+    btnExcluir: TBitBtn;
+    Bevel1: TBevel;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmExcluirProduto: TfrmExcluirProduto;
+
+implementation
+
+{$R *.dfm}
+
+end.
