@@ -1,0 +1,36 @@
+unit uCadClientes;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uBase, Data.DB, Vcl.ExtCtrls, Vcl.Grids,
+  Vcl.DBGrids, Vcl.StdCtrls, Vcl.Buttons, Vcl.ComCtrls, uDmTabelas;
+
+type
+  tpPesquisa = (tpCodigo, tpNome);
+
+type
+  TfrmCadClientes = class(TfrmBase)
+    procedure FormShow(Sender: TObject);
+  private
+    { Private declarations }
+    dtmTabelas : TdmTabelas;
+    tipo : tpPesquisa;
+  public
+    { Public declarations }
+  end;
+
+var
+  frmCadClientes: TfrmCadClientes;
+
+implementation
+
+{$R *.dfm}
+
+procedure TfrmCadClientes.FormShow(Sender: TObject);
+begin
+  tipo := tpCodigo;
+end;
+
+end.

@@ -1,0 +1,188 @@
+inherited frmCadProdutos: TfrmCadProdutos
+  Caption = 'Cadastro de Produtos'
+  OnDestroy = FormDestroy
+  OnShow = FormShow
+  PixelsPerInch = 96
+  TextHeight = 13
+  inherited pnBody: TFlowPanel
+    inherited pgcBase: TPageControl
+      inherited tabConsulta: TTabSheet
+        ExplicitLeft = 4
+        ExplicitTop = 24
+        ExplicitWidth = 473
+        ExplicitHeight = 193
+        inherited GroupBox1: TGroupBox
+          inherited btnLocalizar: TSpeedButton
+            OnClick = btnLocalizarClick
+          end
+          inherited edtLocalizar: TEdit
+            OnKeyPress = EditsKeyPress
+          end
+        end
+        inherited grdConsulta: TDBGrid
+          DataSource = dmTabelas.dsProduto
+          Columns = <
+            item
+              Expanded = False
+              FieldName = 'ID'
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'COD_BARRA'
+              Width = 90
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'DESCRICAO'
+              Width = 210
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'QTD_ESTOQUE'
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'VLR_COMPRA'
+              Width = 82
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'PERC_LUCRO'
+              Width = 82
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'VLR_VENDA'
+              Width = 82
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'CONTR_ESTOQUE'
+              Visible = True
+            end>
+        end
+      end
+      inherited tabCadastro: TTabSheet
+        object Label1: TLabel [1]
+          Left = 18
+          Top = 22
+          Width = 52
+          Height = 13
+          Caption = 'Cod. Barra'
+          FocusControl = edtCodBarra
+        end
+        object Label2: TLabel [2]
+          Left = 159
+          Top = 22
+          Width = 102
+          Height = 13
+          Caption = 'Descri'#231#227'o do Produto'
+          FocusControl = EdtDescricao
+        end
+        object Label3: TLabel [3]
+          Left = 18
+          Top = 67
+          Width = 70
+          Height = 13
+          Caption = 'Qtde. Estoque'
+          FocusControl = edtQtdEstoque
+        end
+        object Label4: TLabel [4]
+          Left = 123
+          Top = 67
+          Width = 56
+          Height = 13
+          Caption = 'Vlr. Compra'
+          FocusControl = edtVlrCompra
+        end
+        object Label5: TLabel [5]
+          Left = 344
+          Top = 67
+          Width = 49
+          Height = 13
+          Caption = 'Vlr. Venda'
+          FocusControl = edtVlrVenda
+        end
+        object Label6: TLabel [6]
+          Left = 238
+          Top = 67
+          Width = 48
+          Height = 13
+          Caption = 'Lucro (%)'
+          FocusControl = edtPercLucro
+        end
+        object edtCodBarra: TDBEdit
+          Left = 18
+          Top = 38
+          Width = 135
+          Height = 21
+          DataField = 'COD_BARRA'
+          DataSource = dmTabelas.dsProduto
+          TabOrder = 2
+        end
+        object EdtDescricao: TDBEdit
+          Left = 159
+          Top = 38
+          Width = 295
+          Height = 21
+          DataField = 'DESCRICAO'
+          DataSource = dmTabelas.dsProduto
+          TabOrder = 3
+        end
+        object edtQtdEstoque: TDBEdit
+          Left = 18
+          Top = 83
+          Width = 100
+          Height = 21
+          DataField = 'QTD_ESTOQUE'
+          DataSource = dmTabelas.dsProduto
+          TabOrder = 4
+        end
+        object edtVlrCompra: TDBEdit
+          Left = 123
+          Top = 83
+          Width = 110
+          Height = 21
+          DataField = 'VLR_COMPRA'
+          DataSource = dmTabelas.dsProduto
+          TabOrder = 5
+        end
+        object edtVlrVenda: TDBEdit
+          Left = 344
+          Top = 83
+          Width = 110
+          Height = 21
+          DataField = 'VLR_VENDA'
+          DataSource = dmTabelas.dsProduto
+          TabOrder = 6
+        end
+        object edtPercLucro: TDBEdit
+          Left = 238
+          Top = 83
+          Width = 100
+          Height = 21
+          DataField = 'PERC_LUCRO'
+          DataSource = dmTabelas.dsProduto
+          TabOrder = 7
+        end
+        object cbContrEstoque: TDBCheckBox
+          Left = 18
+          Top = 117
+          Width = 108
+          Height = 17
+          Caption = 'Controla Estoque'
+          DataField = 'CONTR_ESTOQUE'
+          DataSource = dmTabelas.dsProduto
+          TabOrder = 8
+        end
+      end
+    end
+  end
+end

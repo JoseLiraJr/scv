@@ -1,0 +1,76 @@
+unit uClienteController;
+
+interface
+
+uses
+  System.SysUtils, Data.DB, FireDAC.Comp.Client, FireDAC.DApt,
+  uDmPrincipal, uCliente;
+
+type
+  TClienteController = class
+  private
+    cliente : TCliente;
+  public
+    function Save(dtSource : TDataSource) : Integer;
+    procedure Open(dtSource : TDataSource);
+    procedure Insert(dtSource : TDataSource);
+    procedure Edit(dtSource : TDataSource);
+    function Delete(dtSource: TDataSource): Boolean;
+    procedure Filter(dtSource : TDataSource; tpPesquisa : Integer; valor : string); overload;
+    procedure Cancel(dtSource : TDataSource);
+
+    constructor Create;
+    destructor Destroy; override;
+  end;
+
+implementation
+
+{ TClienteController }
+
+procedure TClienteController.Cancel(dtSource: TDataSource);
+begin
+  //
+end;
+
+constructor TClienteController.Create;
+begin
+  inherited Create;
+end;
+
+function TClienteController.Delete(dtSource: TDataSource): Boolean;
+begin
+  //
+end;
+
+destructor TClienteController.Destroy;
+begin
+  inherited Destroy;
+end;
+
+procedure TClienteController.Edit(dtSource: TDataSource);
+begin
+  //
+end;
+
+procedure TClienteController.Filter(dtSource: TDataSource; tpPesquisa: Integer;
+  valor: string);
+begin
+  //
+end;
+
+procedure TClienteController.Insert(dtSource: TDataSource);
+begin
+  //
+end;
+
+procedure TClienteController.Open(dtSource: TDataSource);
+begin
+  //
+end;
+
+function TClienteController.Save(dtSource: TDataSource): Integer;
+begin
+  //
+end;
+
+end.

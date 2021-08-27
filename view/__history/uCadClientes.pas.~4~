@@ -1,0 +1,60 @@
+unit uCadClientes;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uBase, Data.DB, Vcl.ExtCtrls, Vcl.Grids,
+  Vcl.DBGrids, Vcl.StdCtrls, Vcl.Buttons, Vcl.ComCtrls, uDmTabelas, uClienteController;
+
+type
+  tpPesquisa = (tpCodigo, tpNome);
+
+type
+  TfrmCadClientes = class(TfrmBase)
+    procedure FormShow(Sender: TObject);
+    procedure btnInserirClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
+  private
+    { Private declarations }
+    dtmTabelas : TdmTabelas;
+    tipo : tpPesquisa;
+    clienteCTO : TClienteController;
+  public
+    { Public declarations }
+  end;
+
+var
+  frmCadClientes: TfrmCadClientes;
+
+implementation
+
+{$R *.dfm}
+
+procedure TfrmCadClientes.btnInserirClick(Sender: TObject);
+begin
+  clienteCTO.Insert(dtmTabelas.dsCliente);
+  inherited;
+end;
+
+procedure TfrmCadClientes.FormCreate(Sender: TObject);
+begin
+  inherited;
+  dtmTabelas := TdmTabelas.Create(Self);
+  clienteCTO := TClienteController.Create;
+  clienteCTO.Open(dtmTabelas.dsCliente);
+end;
+
+procedure TfrmCadClientes.FormDestroy(Sender: TObject);
+begin
+  clienteCTO.Free;
+  dtmTabelas.Free;
+end;
+
+procedure TfrmCadClientes.FormShow(Sender: TObject);
+begin
+  tipo := tpCodigo;
+end;
+
+end.

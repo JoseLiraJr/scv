@@ -1,0 +1,158 @@
+unit uProdutoController;
+
+interface
+
+uses
+  System.SysUtils, Data.DB, FireDAC.Comp.Client, FireDAC.DApt,
+  uDmPrincipal, uProduto;
+
+type
+  TProdutoController = class
+  private
+    produto : TProduto;
+    function GetProduto(descricao, codBarra : string) : Integer;
+  public
+    function Save(dtSource : TDataSource) : Integer;
+    procedure Open(dtSource : TDataSource);
+    procedure Insert(dtSource : TDataSource);
+    procedure Edit(dtSource : TDataSource);
+    function Delete(dtSource: TDataSource): Boolean;
+    procedure Filter(dtSource : TDataSource; tpPesquisa : Integer; valor : string); overload;
+    procedure Cancel(dtSource : TDataSource);
+    function GetVlrVendaPerc(vlrInf, vlrComp : Double; perc : Boolean) : Double;
+
+    constructor Create;
+    destructor Destroy; override;
+  end;
+
+implementation
+
+{ TProdutoController }
+
+procedure TProdutoController.Cancel(dtSource: TDataSource);
+begin
+  if not(produto.Cancel(dtSource)) then
+    raise Exception.Create('Erro ao tentar cancelar a operação!');
+end;
+
+constructor TProdutoController.Create;
+begin
+  produto := TProduto.Create;
+  inherited Create;
+end;
+
+function TProdutoController.Delete(dtSource: TDataSource): Boolean;
+begin
+  if (dtSource.DataSet.RecordCount <= 0) then
+    raise Exception.Create('A tabela está vazia!');
+
+  Result:= produto.Delete(dtSource);
+  if not(Result) then
+   raise Exception.Create('Erro ao tentar excluir o registro');
+end;
+
+destructor TProdutoController.Destroy;
+begin
+  produto.Free;
+  inherited Destroy;
+end;
+
+procedure TProdutoController.Edit(dtSource: TDataSource);
+begin
+  if (dtSource.DataSet.RecordCount <= 0) then
+    raise Exception.Create('A tabela está vazia!');
+
+  if not(produto.Edit(dtSource)) then
+   raise Exception.Create('Erro ao tentar colocar a tabela de cadastro de produtos em modo de edição!');
+end;
+
+procedure TProdutoController.Filter(dtSource: TDataSource; tpPesquisa: Integer;
+  valor: string);
+var
+  vlrInt : Integer;
+begin
+  if (valor = '') then
+   raise Exception.Create('Valor da pesquisa está vazio!');
+
+  if (tpPesquisa = 0) then
+   begin
+    try
+      vlrInt := StrToInt(valor);
+    except
+      vlrInt := 0;
+    end;
+
+    if not(produto.Filter(dtSource, vlrInt)) then
+      raise Exception.Create('Erro ao ralizar a pesquisa');
+   end
+  else
+  if (tpPesquisa = 1) then
+   begin
+     if not(produto.Filter(dtSource, valor)) then
+       raise Exception.Create('Erro ao ralizar a pesquisa');
+   end;
+end;
+
+function TProdutoController.GetProduto(descricao, codBarra: string): Integer;
+var
+  query : TFDQuery;
+begin
+  query := TFDQuery.Create(nil);
+  try
+    query.Connection := TdmPrincipal.GetConnection.Conexao;
+
+    query.Open('SELECT * FROM PRODUTO WHERE DESCRICAO = ' + QuotedStr(descricao) +
+                  ' AND COD_BARRA = ' + QuotedStr(codBarra));
+    Result := query.RecordCount;
+  finally
+    query.Free;
+  end;
+end;
+
+function TProdutoController.GetVlrVendaPerc(vlrInf, vlrComp: Double;
+  perc: Boolean): Double;
+begin
+  if (perc) then
+   begin
+     Result := vlrComp + ((vlrComp * vlrInf) / 100);
+   end
+  else
+   begin
+     result := ((vlrInf * 100) / vlrComp) - vlrComp;
+   end;
+end;
+
+procedure TProdutoController.Insert(dtSource: TDataSource);
+begin
+  if not(produto.Insert(dtSource)) then
+   raise Exception.Create('Erro ao tentar colocar a tabela de cadastro de produtos em modo de inserção!');
+end;
+
+procedure TProdutoController.Open(dtSource: TDataSource);
+begin
+  if not(produto.Open(dtSource)) then
+   raise Exception.Create('Erro ao abrir a tabela de cadastro de produtos!');
+end;
+
+function TProdutoController.Save(dtSource: TDataSource): Integer;
+begin
+  //Validações do Objeto na camada de controle
+  if not(Assigned(dtSource)) then
+    raise Exception.Create('A tabela não está criada em memória!');
+
+  if (dtSource.DataSet.FieldByName('DESCRICAO').AsString = '') then
+    raise Exception.Create('Informe uma descricao para o produto, antes de continuar!');
+
+  if (dtSource.DataSet.FieldByName('COD_BARRA').AsString = '') then
+    raise Exception.Create('Informe um código de barra para o produto, antes de continuar!');
+
+  if (dtSource.DataSet.State = dsInsert) and (GetProduto(dtSource.DataSet.FieldByName('DESCRICAO').AsString,
+      dtSource.DataSet.FieldByName('COD_BARRA').AsString) > 0) then
+    raise Exception.Create('Já existe um produto cadastrado com a mesma descrição e código de barra!');
+
+  Result := produto.Save(dtSource);
+  if (Result <= 0) then
+   raise Exception.Create('Erro ao tentar salvar um registro na tabela de cadastro de produtos');
+end;
+
+end.

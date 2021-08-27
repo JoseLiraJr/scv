@@ -1,0 +1,71 @@
+unit uDmTabelas;
+
+interface
+
+uses
+  System.SysUtils, System.Classes, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
+  FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, Data.DB,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, uDmPrincipal;
+
+type
+  TdmTabelas = class(TDataModule)
+    qryCliente: TFDQuery;
+    dsCliente: TDataSource;
+    qryClienteID: TFDAutoIncField;
+    qryClienteNOME: TStringField;
+    qryClienteCPF: TStringField;
+    qryClienteSEXO: TStringField;
+    qryClienteLOGRADOURO: TStringField;
+    qryClienteNUMERO: TStringField;
+    qryClienteBAIRRO: TStringField;
+    qryClienteCIDADE: TStringField;
+    qryClienteUF: TStringField;
+    qryClienteCEP: TStringField;
+    qryClienteTELEFONE: TStringField;
+    qryClienteEMAIL: TStringField;
+    qryProduto: TFDQuery;
+    dsProduto: TDataSource;
+    qryProdutoID: TFDAutoIncField;
+    qryProdutoCOD_BARRA: TStringField;
+    qryProdutoDESCRICAO: TStringField;
+    qryProdutoQTD_ESTOQUE: TBCDField;
+    qryProdutoVLR_COMPRA: TBCDField;
+    qryProdutoPERC_LUCRO: TBCDField;
+    qryProdutoVLR_VENDA: TBCDField;
+    qryProdutoCONTR_ESTOQUE: TBooleanField;
+    qryPesquisa: TFDQuery;
+    dsPesquisa: TDataSource;
+    qryPesquisaIdVenda: TFDAutoIncField;
+    qryPesquisaIdCliente: TIntegerField;
+    qryPesquisaNome: TStringField;
+    qryPesquisaDt_Venda: TDateField;
+    qryPesquisaVlr_Venda: TBCDField;
+    qryVenda: TFDQuery;
+    dsVenda: TDataSource;
+    qryVendaID: TFDAutoIncField;
+    qryVendaDT_VENDA: TDateField;
+    qryVendaID_CLIENTE: TIntegerField;
+    qryVendaVLR_TOT_VENDA: TBCDField;
+    procedure DataModuleCreate(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  dmTabelas: TdmTabelas;
+
+implementation
+
+{%CLASSGROUP 'Vcl.Controls.TControl'}
+
+{$R *.dfm}
+
+procedure TdmTabelas.DataModuleCreate(Sender: TObject);
+begin
+  qryCliente.Connection := TdmPrincipal.GetConnection.Conexao;
+end;
+
+end.

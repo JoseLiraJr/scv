@@ -1,0 +1,153 @@
+unit ItemVenda;
+
+interface
+
+uses
+  Data.DB, System.SysUtils, System.Variants;
+
+type
+  TItemVenda = class
+  private
+    FVlrTotal: Double;
+    FIdProduto: Integer;
+    FId: Integer;
+    FIdVenda: Integer;
+    FQtdVendida: Double;
+    FVlrUnitario: Double;
+    FDescProduto: String;
+    procedure SetId(const Value: Integer);
+    procedure SetIdProduto(const Value: Integer);
+    procedure SetIdVenda(const Value: Integer);
+    procedure SetQtdVendida(const Value: Double);
+    procedure SetVlrTotal(const Value: Double);
+    procedure SetVlrUnitario(const Value: Double);
+    procedure SetDescProduto(const Value: String);
+  public
+    ListaProduto : array of TItemVenda;
+    function Open(dtSource : TDataSource) : Boolean;
+    function Cancel(dtSource: TDataSource) : Boolean;
+    function GetVlrUnit(dtSource : TDataSource; id : Integer) : Double;
+    function save(dtSource : TDataSource) : Boolean;
+    function insert(dtSource : TDataSource) : Boolean;
+    function delete(dtSource : TDataSource; codVenda : Integer) : Boolean;
+    property Id : Integer read FId write SetId;
+    property IdVenda : Integer read FIdVenda write SetIdVenda;
+    property IdProduto : Integer read FIdProduto write SetIdProduto;
+    property DescProduto : String read FDescProduto write SetDescProduto;
+    property QtdVendida : Double read FQtdVendida write SetQtdVendida;
+    property VlrUnitario : Double read FVlrUnitario write SetVlrUnitario;
+    property VlrTotal : Double read FVlrTotal write SetVlrTotal;
+  end;
+
+implementation
+
+{ TItemVenda }
+
+function TItemVenda.Cancel(dtSource: TDataSource): Boolean;
+begin
+  Result := True;
+  try
+    dtSource.DataSet.Cancel;
+  except
+    Result := False;
+  end;
+end;
+
+function TItemVenda.delete(dtSource: TDataSource; codVenda : Integer): Boolean;
+begin
+  Result := True;
+  try
+    with dtSource.DataSet do
+     begin
+      First;
+      while not(Eof) do
+       begin
+         if (FieldByName('ID_VENDA').AsInteger = codVenda) then
+          Delete
+         else
+          Next;
+       end;
+     end;
+  except
+    Result := False;
+  end;
+end;
+
+function TItemVenda.GetVlrUnit(dtSource: TDataSource; id: Integer): Double;
+begin
+  Result := dtSource.DataSet.Lookup('ID', id, 'VLR_VENDA');
+end;
+
+function TItemVenda.insert(dtSource: TDataSource): Boolean;
+begin
+  Result := True;
+  try
+    dtSource.DataSet.Insert;
+  except
+    Result := False;
+  end;
+end;
+
+function TItemVenda.Open(dtSource: TDataSource): Boolean;
+begin
+  Result := True;
+  try
+    if not(dtSource.DataSet.Active) then
+     dtSource.DataSet.Active := True;
+    dtSource.DataSet.Open;
+  except
+    Result := False;
+  end;
+end;
+
+function TItemVenda.save(dtSource : TDataSource): Boolean;
+begin
+  Result := False;
+  try
+   dtSource.DataSet.Post;
+   Result := True;
+  except
+   on e : Exception do
+    begin
+      Result := False;
+      raise Exception.Create('Erro ao inserir dados ' + e.Message);
+    end;
+  end;
+end;
+
+procedure TItemVenda.SetDescProduto(const Value: String);
+begin
+  FDescProduto := Value;
+end;
+
+procedure TItemVenda.SetId(const Value: Integer);
+begin
+  FId := Value;
+end;
+
+procedure TItemVenda.SetIdProduto(const Value: Integer);
+begin
+  FIdProduto := Value;
+end;
+
+procedure TItemVenda.SetIdVenda(const Value: Integer);
+begin
+  FIdVenda := Value;
+end;
+
+procedure TItemVenda.SetQtdVendida(const Value: Double);
+begin
+  FQtdVendida := Value;
+end;
+
+procedure TItemVenda.SetVlrTotal(const Value: Double);
+begin
+  FVlrTotal := Value;
+end;
+
+procedure TItemVenda.SetVlrUnitario(const Value: Double);
+begin
+  FVlrUnitario := Value;
+end;
+
+end.
